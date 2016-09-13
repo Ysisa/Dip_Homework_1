@@ -191,7 +191,7 @@ namespace Picture
                     //内存法, 老办法, 处理的是8位灰度图
                     Rectangle rect = new Rectangle(0, 0, curBitmap.Width, curBitmap.Height);
                     System.Drawing.Imaging.BitmapData bmpData
-                        = curBitmap.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
+                        = curBitmap.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
                     IntPtr ptr = bmpData.Scan0;
 
@@ -200,14 +200,14 @@ namespace Picture
 
                     //图像总像素
                     int bytes = curBitmap.Width * curBitmap.Height;
-                    byte[] grayValues = new byte[bytes];
+                    int[] grayValues = new int[bytes];
                     System.Runtime.InteropServices.Marshal.Copy(ptr, grayValues, 0, bytes);
 
                     //得到处理后图像的横向&纵向像素, 并建立相应的数组
                     int widthAfter = Convert.ToInt32(zoomForm.GetXZoom);
                     int heightAfter = Convert.ToInt32(zoomForm.GetYZoom);
                     int bytesAfter = widthAfter * heightAfter;
-                    byte[] newArray = new byte[bytesAfter];
+                    int[] newArray = new int[bytesAfter];
 
                     if (zoomForm.GetNearOrBil == true)
                     {
@@ -252,19 +252,20 @@ namespace Picture
                     curBitmap.UnlockBits(bmpData);
 
                     //新建一个bitmap, 并更改调色板
-                    System.Drawing.Bitmap newBitmap = new Bitmap(widthAfter, heightAfter, System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
-                    System.Drawing.Imaging.ColorPalette pal = newBitmap.Palette;
+                    System.Drawing.Bitmap newBitmap = new Bitmap(widthAfter, heightAfter, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                    /*System.Drawing.Imaging.ColorPalette pal = newBitmap.Palette;
                     System.Console.WriteLine(pal.Entries.Length);
                     for (int i = 0; i < pal.Entries.Length; i++)
                     {
                         pal.Entries[i] = Color.FromArgb(255, i, i, i);
                     }
-                    newBitmap.Palette = pal;
+                    newBitmap.Palette = pal;*/
 
                     //新建一个大小匹配的矩形并锁定newBitmap的像素
                     Rectangle newRect = new Rectangle(0, 0, newBitmap.Width, newBitmap.Height);
                     System.Drawing.Imaging.BitmapData newData
-                        = newBitmap.LockBits(newRect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
+                        = newBitmap.LockBits(newRect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
 
                     //找到newData头指针, 将数组数据copy进来

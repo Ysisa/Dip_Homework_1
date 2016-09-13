@@ -40,7 +40,7 @@
             // 
             this.open.Location = new System.Drawing.Point(33, 43);
             this.open.Name = "open";
-            this.open.Size = new System.Drawing.Size(75, 23);
+            this.open.Size = new System.Drawing.Size(89, 23);
             this.open.TabIndex = 0;
             this.open.Text = "打开图像";
             this.open.UseVisualStyleBackColor = true;
@@ -50,7 +50,7 @@
             // 
             this.save.Location = new System.Drawing.Point(33, 72);
             this.save.Name = "save";
-            this.save.Size = new System.Drawing.Size(75, 23);
+            this.save.Size = new System.Drawing.Size(89, 23);
             this.save.TabIndex = 1;
             this.save.Text = "保存图像";
             this.save.UseVisualStyleBackColor = true;
@@ -60,7 +60,7 @@
             // 
             this.close.Location = new System.Drawing.Point(33, 101);
             this.close.Name = "close";
-            this.close.Size = new System.Drawing.Size(75, 23);
+            this.close.Size = new System.Drawing.Size(89, 23);
             this.close.TabIndex = 2;
             this.close.Text = "关闭";
             this.close.UseVisualStyleBackColor = true;
@@ -70,9 +70,9 @@
             // 
             this.pixel.Location = new System.Drawing.Point(33, 130);
             this.pixel.Name = "pixel";
-            this.pixel.Size = new System.Drawing.Size(75, 23);
+            this.pixel.Size = new System.Drawing.Size(89, 23);
             this.pixel.TabIndex = 3;
-            this.pixel.Text = "像素法";
+            this.pixel.Text = "黑白化(像素)";
             this.pixel.UseVisualStyleBackColor = true;
             this.pixel.Click += new System.EventHandler(this.pixel_Click);
             // 
@@ -80,9 +80,9 @@
             // 
             this.memory.Location = new System.Drawing.Point(33, 159);
             this.memory.Name = "memory";
-            this.memory.Size = new System.Drawing.Size(75, 23);
+            this.memory.Size = new System.Drawing.Size(89, 23);
             this.memory.TabIndex = 4;
-            this.memory.Text = "内存法";
+            this.memory.Text = "黑白化(内存)";
             this.memory.UseVisualStyleBackColor = true;
             this.memory.Click += new System.EventHandler(this.memory_Click);
             // 
@@ -90,7 +90,7 @@
             // 
             this.zoom.Location = new System.Drawing.Point(33, 188);
             this.zoom.Name = "zoom";
-            this.zoom.Size = new System.Drawing.Size(75, 23);
+            this.zoom.Size = new System.Drawing.Size(89, 23);
             this.zoom.TabIndex = 5;
             this.zoom.Text = "缩放";
             this.zoom.UseVisualStyleBackColor = true;
