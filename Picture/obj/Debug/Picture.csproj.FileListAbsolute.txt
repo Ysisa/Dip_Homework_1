@@ -1,0 +1,10 @@
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\bin\Debug\Picture.exe.config
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\obj\Debug\Picture.csprojResolveAssemblyReference.cache
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\obj\Debug\Picture.Properties.Resources.resources
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\obj\Debug\Picture.csproj.GenerateResource.Cache
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\bin\Debug\Picture.exe
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\bin\Debug\Picture.pdb
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\obj\Debug\Picture.Picture.resources
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\obj\Debug\Picture.exe
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\obj\Debug\Picture.pdb
+D:\Documents\我的文档\00大三第一学期\数字图像处理\作业\Code\test\Picture\Picture\obj\Debug\Picture.Zoom.resources
