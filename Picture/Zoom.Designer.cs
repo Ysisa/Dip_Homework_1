@@ -36,11 +36,13 @@
             this.startZoom = new System.Windows.Forms.Button();
             this.Text2 = new System.Windows.Forms.Label();
             this.close = new System.Windows.Forms.Button();
+            this.bilinear = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.bilinear);
             this.groupBox1.Controls.Add(this.nearestNeigh);
             this.groupBox1.Location = new System.Drawing.Point(28, 24);
             this.groupBox1.Name = "groupBox1";
@@ -57,7 +59,6 @@
             this.nearestNeigh.Name = "nearestNeigh";
             this.nearestNeigh.Size = new System.Drawing.Size(71, 16);
             this.nearestNeigh.TabIndex = 0;
-            this.nearestNeigh.TabStop = true;
             this.nearestNeigh.Text = "临近插值";
             this.nearestNeigh.UseVisualStyleBackColor = true;
             // 
@@ -118,6 +119,16 @@
             this.close.UseVisualStyleBackColor = true;
             this.close.Click += new System.EventHandler(this.close_Click);
             // 
+            // bilinear
+            // 
+            this.bilinear.AutoSize = true;
+            this.bilinear.Location = new System.Drawing.Point(206, 41);
+            this.bilinear.Name = "bilinear";
+            this.bilinear.Size = new System.Drawing.Size(83, 16);
+            this.bilinear.TabIndex = 1;
+            this.bilinear.Text = "双线性插值";
+            this.bilinear.UseVisualStyleBackColor = true;
+            // 
             // Zoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -151,5 +162,6 @@
         private System.Windows.Forms.Button startZoom;
         private System.Windows.Forms.Label Text2;
         private System.Windows.Forms.Button close;
+        private System.Windows.Forms.RadioButton bilinear;
     }
 }
