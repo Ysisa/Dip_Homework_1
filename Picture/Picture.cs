@@ -245,8 +245,6 @@ namespace Picture
                     }
                     else
                     {
-                        System.Console.WriteLine("这里是双线性哟");
-
                         //用来计数iTemp和jTemp的小数部分, 对应公式中的P和Q
                         double p = 0;
                         double q = 0;
@@ -302,8 +300,8 @@ namespace Picture
                                         getBlue(grayValues[(iBefore + 1) * curBitmap.Width + jBefore]),
                                         getBlue(grayValues[(iBefore + 1) * curBitmap.Width + jBefore + 1]));
                                     result = 0xff;
-                                    result = (result << 8) + g;
                                     result = (result << 8) + r;
+                                    result = (result << 8) + g;
                                     result = (result << 8) + b;
                                     newArray[i * widthAfter + j] = result;
                                 }
@@ -357,18 +355,16 @@ namespace Picture
 
         private byte getRed(int n)
         {
-            return (byte)((n & 0x0000ff00) >> 8);
+            return (byte)((n & 0x00ff0000) >> 16);
         }
 
         private byte getGreen(int n)
         {
-            //System.Console.WriteLine("{0:x0}", ((n & 0x00ff0000) >> 16));
-            return (byte)((n & 0x00ff0000) >> 16);
+            return (byte)((n & 0x0000ff00) >> 8);
         }
 
         private byte getBlue(int n)
         {
-            //System.Console.WriteLine("{0:x0}", n);
             return (byte)(n & 0x0000ff);
         }
 
