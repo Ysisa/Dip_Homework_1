@@ -123,56 +123,10 @@ namespace Picture
         {
             if (curBitmap != null)
             {
-                Rectangle rect = new Rectangle(0, 0, curBitmap.Width, curBitmap.Height);
-                System.Drawing.Imaging.BitmapData bmpData = curBitmap.LockBits(rect,
-                    System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                    curBitmap.PixelFormat);
+                System.Console.WriteLine("click");
 
-                int pixelSize = 0;
-                switch (bmpData.PixelFormat)
-                {
-                    case System.Drawing.Imaging.PixelFormat.Format24bppRgb:
-                        pixelSize = 3;
-                        break;
-                    case System.Drawing.Imaging.PixelFormat.Format32bppArgb:
-                        pixelSize = 4;
-                        break;
-                    default:
-                        break;
-                }
-
-                IntPtr ptr = bmpData.Scan0;
-
-                int bytes = bmpData.Stride * bmpData.Height;
-                byte[] rgbvalues = new byte[bytes];
-
-                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbvalues, 0, bytes);
-
-                double colorTemp = 0;
-
-                for (int i = 0; i < bmpData.Height; i++)
-                {
-                    for (int j = 0; j < bmpData.Width * pixelSize; j += pixelSize)
-                    {
-                        colorTemp = rgbvalues[i * bmpData.Stride + j + 2] * 0.299
-                            + rgbvalues[i * bmpData.Stride + j + 1] * 0.587
-                            + rgbvalues[i * bmpData.Stride + j] * 0.114;
-                        rgbvalues[i * bmpData.Stride + j + 2]
-                            = rgbvalues[i * bmpData.Stride + j + 1]
-                            = rgbvalues[i * bmpData.Stride + j]
-                            = (byte)colorTemp;
-                    }
-                }
-
-                /*for (int i = 0; i < rgbvalues.Length; i += pixelSize)
-                {
-                    colorTemp = rgbvalues[i + 2] * 0.299 +
-                        rgbvalues[i + 1] * 0.587 + rgbvalues[i] * 0.114;
-                    rgbvalues[i] = rgbvalues[i + 1] = rgbvalues[i + 2] = (byte)colorTemp;
-                }*/
-
-                System.Runtime.InteropServices.Marshal.Copy(rgbvalues, 0, ptr, bytes);
-                curBitmap.UnlockBits(bmpData);
+                ColorProcess processor = new ColorProcess();
+                processor.setBitmapGray(ref curBitmap, 0.299, 0.587, 0.114);
 
                 Invalidate();
             }
@@ -196,8 +150,8 @@ namespace Picture
 
                     //图像总像素
                     int bytes = curBitmap.Width * curBitmap.Height;
-                    int[] grayValues = new int[bytes];
-                    System.Runtime.InteropServices.Marshal.Copy(ptr, grayValues, 0, bytes);
+                    int[] rgbValues = new int[bytes];
+                    System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
                     //得到处理后图像的横向&纵向像素, 并建立相应的数组
                     int widthAfter = Convert.ToInt32(zoomForm.GetXZoom);
@@ -238,7 +192,7 @@ namespace Picture
                                 else
                                 {
                                     newArray[i * widthAfter + j] =
-                                        grayValues[iBefore * curBitmap.Width + jBefore];
+                                        rgbValues[iBefore * curBitmap.Width + jBefore];
                                 }
                             }
                         }
@@ -253,11 +207,17 @@ namespace Picture
                         int iBefore = 0;
                         int jBefore = 0;
 
-                        //将int类型分解成rgb三个Byte
-                        byte r = 0, g = 0, b = 0;
-
-                        //将rgb合成最终结果;
-                        int result = 0;
+                        //将int类型分解成Argb四个Byte
+                        //双线性插值需要四个点, 为他们各创建一个Byte数组
+                        //a--b
+                        //|  |
+                        //c--d
+                        //位置关系如上
+                        byte[] Argb = new byte[4];
+                        byte[] A = new byte[4];
+                        byte[] B = new byte[4];
+                        byte[] C = new byte[4];
+                        byte[] D = new byte[4];
 
                         //双线性插值
                         for (int i = 0; i < heightAfter; i++)
@@ -268,7 +228,7 @@ namespace Picture
                                 iTemp = (double)i / heightAfter * curBitmap.Height;
                                 jTemp = (double)j / widthAfter * curBitmap.Width;
 
-                                //计算整数部分
+                                //计算整数部分, 即源图像对应的(i, j)
                                 iBefore = (int)iTemp;
                                 jBefore = (int)jTemp;
 
@@ -283,27 +243,16 @@ namespace Picture
                                 }
                                 else
                                 {
+                                    A = BitConverter.GetBytes(rgbValues[iBefore * bmpData.Width + jBefore]);
+                                    B = BitConverter.GetBytes(rgbValues[iBefore * bmpData.Width + jBefore + 1]);
+                                    C = BitConverter.GetBytes(rgbValues[(iBefore + 1) * bmpData.Width + jBefore]);
+                                    D = BitConverter.GetBytes(rgbValues[(iBefore + 1) * bmpData.Width + jBefore + 1]);
                                     //将四角四个像素作为参数输入, 即可双线性运算
-                                    //a--b
-                                    //|  |
-                                    //c--d
-                                    r = bilinear(p, q, getRed(grayValues[iBefore * curBitmap.Width + jBefore]),
-                                        getRed(grayValues[iBefore * curBitmap.Width + jBefore + 1]),
-                                        getRed(grayValues[(iBefore + 1) * curBitmap.Width + jBefore]),
-                                        getRed(grayValues[(iBefore + 1) * curBitmap.Width + jBefore + 1]));
-                                    g = bilinear(p, q, getGreen(grayValues[iBefore * curBitmap.Width + jBefore]),
-                                        getGreen(grayValues[iBefore * curBitmap.Width + jBefore + 1]),
-                                        getGreen(grayValues[(iBefore + 1) * curBitmap.Width + jBefore]),
-                                        getGreen(grayValues[(iBefore + 1) * curBitmap.Width + jBefore + 1]));
-                                    b = bilinear(p, q, getBlue(grayValues[iBefore * curBitmap.Width + jBefore]),
-                                        getBlue(grayValues[iBefore * curBitmap.Width + jBefore + 1]),
-                                        getBlue(grayValues[(iBefore + 1) * curBitmap.Width + jBefore]),
-                                        getBlue(grayValues[(iBefore + 1) * curBitmap.Width + jBefore + 1]));
-                                    result = 0xff;
-                                    result = (result << 8) + r;
-                                    result = (result << 8) + g;
-                                    result = (result << 8) + b;
-                                    newArray[i * widthAfter + j] = result;
+                                    for (int k = 0; k < 4; k++)
+                                    {
+                                        Argb[k] = bilinear(p, q, A[k], B[k], C[k], D[k]);
+                                    }
+                                    newArray[i * widthAfter + j] = BitConverter.ToInt32(Argb, 0);
                                 }
                             }
                         }
@@ -344,6 +293,71 @@ namespace Picture
             }
         }
 
+        private void To128Color_Click(object sender, EventArgs e)
+        {
+            if (curBitmap != null)
+            {
+                System.Console.WriteLine("click");
+
+                ColorProcess processor = new ColorProcess();
+                processor.setBitmapColorDegree(ref curBitmap, 7);
+
+                Invalidate();
+            }
+        }
+
+        private void To32Color_Click(object sender, EventArgs e)
+        {
+            if (curBitmap != null)
+            {
+                System.Console.WriteLine("click");
+
+                ColorProcess processor = new ColorProcess();
+                processor.setBitmapColorDegree(ref curBitmap, 5);
+
+                Invalidate();
+            }
+        }
+
+        private void To8Color_Click(object sender, EventArgs e)
+        {
+            if (curBitmap != null)
+            {
+                System.Console.WriteLine("click");
+
+                ColorProcess processor = new ColorProcess();
+                processor.setBitmapColorDegree(ref curBitmap, 3);
+
+                Invalidate();
+            }
+        }
+
+        private void To4Color_Click(object sender, EventArgs e)
+        {
+            if (curBitmap != null)
+            {
+                System.Console.WriteLine("click");
+
+                ColorProcess processor = new ColorProcess();
+                processor.setBitmapColorDegree(ref curBitmap, 2);
+
+                Invalidate();
+            }
+        }
+
+        private void To2Color_Click(object sender, EventArgs e)
+        {
+            if (curBitmap != null)
+            {
+                System.Console.WriteLine("click");
+
+                ColorProcess processor = new ColorProcess();
+                processor.setBitmapColorDegree(ref curBitmap, 1);
+
+                Invalidate();
+            }
+        }
+
         //a--b
         //|  |
         //c--d
@@ -353,6 +367,13 @@ namespace Picture
                 + p * ((1 - q) * c + q * d));
         }
 
+        
+
+
+
+
+
+        /*
         private byte getRed(int n)
         {
             return (byte)((n & 0x00ff0000) >> 16);
@@ -367,12 +388,7 @@ namespace Picture
         {
             return (byte)(n & 0x0000ff);
         }
-
-
-
-
-
-
+        */
 
     }
 }

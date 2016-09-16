@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorProcess.cs" />
     <Compile Include="Picture.cs">
       <SubType>Form</SubType>
     </Compile>

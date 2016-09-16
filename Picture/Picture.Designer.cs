@@ -34,6 +34,11 @@
             this.pixel = new System.Windows.Forms.Button();
             this.memory = new System.Windows.Forms.Button();
             this.zoom = new System.Windows.Forms.Button();
+            this.To128Color = new System.Windows.Forms.Button();
+            this.To32Color = new System.Windows.Forms.Button();
+            this.To8Color = new System.Windows.Forms.Button();
+            this.To4Color = new System.Windows.Forms.Button();
+            this.To2Color = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // open
@@ -96,11 +101,66 @@
             this.zoom.UseVisualStyleBackColor = true;
             this.zoom.Click += new System.EventHandler(this.zoom_Click);
             // 
+            // To128Color
+            // 
+            this.To128Color.Location = new System.Drawing.Point(33, 217);
+            this.To128Color.Name = "To128Color";
+            this.To128Color.Size = new System.Drawing.Size(89, 23);
+            this.To128Color.TabIndex = 6;
+            this.To128Color.Text = "128级";
+            this.To128Color.UseVisualStyleBackColor = true;
+            this.To128Color.Click += new System.EventHandler(this.To128Color_Click);
+            // 
+            // To32Color
+            // 
+            this.To32Color.Location = new System.Drawing.Point(33, 246);
+            this.To32Color.Name = "To32Color";
+            this.To32Color.Size = new System.Drawing.Size(89, 23);
+            this.To32Color.TabIndex = 7;
+            this.To32Color.Text = "32级";
+            this.To32Color.UseVisualStyleBackColor = true;
+            this.To32Color.Click += new System.EventHandler(this.To32Color_Click);
+            // 
+            // To8Color
+            // 
+            this.To8Color.Location = new System.Drawing.Point(33, 275);
+            this.To8Color.Name = "To8Color";
+            this.To8Color.Size = new System.Drawing.Size(89, 23);
+            this.To8Color.TabIndex = 8;
+            this.To8Color.Text = "8级";
+            this.To8Color.UseVisualStyleBackColor = true;
+            this.To8Color.Click += new System.EventHandler(this.To8Color_Click);
+            // 
+            // To4Color
+            // 
+            this.To4Color.Location = new System.Drawing.Point(33, 304);
+            this.To4Color.Name = "To4Color";
+            this.To4Color.Size = new System.Drawing.Size(89, 23);
+            this.To4Color.TabIndex = 9;
+            this.To4Color.Text = "4级";
+            this.To4Color.UseVisualStyleBackColor = true;
+            this.To4Color.Click += new System.EventHandler(this.To4Color_Click);
+            // 
+            // To2Color
+            // 
+            this.To2Color.Location = new System.Drawing.Point(33, 333);
+            this.To2Color.Name = "To2Color";
+            this.To2Color.Size = new System.Drawing.Size(89, 23);
+            this.To2Color.TabIndex = 10;
+            this.To2Color.Text = "2级";
+            this.To2Color.UseVisualStyleBackColor = true;
+            this.To2Color.Click += new System.EventHandler(this.To2Color_Click);
+            // 
             // Picture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.To2Color);
+            this.Controls.Add(this.To4Color);
+            this.Controls.Add(this.To8Color);
+            this.Controls.Add(this.To32Color);
+            this.Controls.Add(this.To128Color);
             this.Controls.Add(this.zoom);
             this.Controls.Add(this.memory);
             this.Controls.Add(this.pixel);
@@ -123,5 +183,10 @@
         private System.Windows.Forms.Button pixel;
         private System.Windows.Forms.Button memory;
         private System.Windows.Forms.Button zoom;
+        private System.Windows.Forms.Button To128Color;
+        private System.Windows.Forms.Button To32Color;
+        private System.Windows.Forms.Button To8Color;
+        private System.Windows.Forms.Button To4Color;
+        private System.Windows.Forms.Button To2Color;
     }
 }
