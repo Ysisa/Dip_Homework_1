@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Picture
 {
-    public partial class ColorProcess
+    public partial class PixelProcess
     {
         private System.Drawing.Bitmap curBitmap;
         private System.Drawing.Imaging.BitmapData bmpData;
@@ -22,7 +22,6 @@ namespace Picture
 
         private void setDegree(ref int color)
         {
-            //System.Console.WriteLine("color");
             byte[] Argb = BitConverter.GetBytes(color);
             for (int i = 0; i < 4; i++) setByteDegree(ref Argb[i]);
             color = BitConverter.ToInt32(Argb, 0);
@@ -82,11 +81,12 @@ namespace Picture
             }
         }
 
-        public bool setBitmapGray(ref System.Drawing.Bitmap bitmap, double rWeitht, double gWeitht, double bWeitht)
+        public bool SetBitmapGray(ref System.Drawing.Bitmap bitmap, double rWeitht, double gWeitht, double bWeitht)
         {
             if (bitmap == null) return false;
 
             this.curBitmap = bitmap;
+
             this.rWeitht = rWeitht;
             this.gWeitht = gWeitht;
             this.bWeitht = bWeitht;
@@ -99,7 +99,7 @@ namespace Picture
             return true;
         }
 
-        public bool setBitmapColorDegree(ref System.Drawing.Bitmap bitmap, int degree)
+        public bool SetBitmapColorDegree(ref System.Drawing.Bitmap bitmap, int degree)
         {
             if (bitmap == null) return false;
 
